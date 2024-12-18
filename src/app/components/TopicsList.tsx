@@ -1,64 +1,9 @@
-// 'use client'
-
-// import React, { useState, useEffect } from 'react'
-
-// interface Topic {
-//   _id: string
-//   title: string
-//   description: string
-//   createdAt: string
-//   updatedAt: string
-// }
-
-// interface TopicsListProps {
-//   category: string
-//   year: string
-// }
-
-// export default function TopicsList({ category, year }: TopicsListProps) {
-//   const [topics, setTopics] = useState<Topic[]>([])
-//   const [loading, setLoading] = useState(true)
-//   const [error, setError] = useState<string | null>(null)
-
-//   useEffect(() => {
-//     async function fetchTopics() {
-//       try {
-//         const res = await fetch(`/api/${category}?year=${year}`)
-//         if (!res.ok) throw new Error('Failed to fetch topics')
-//         const data = await res.json()
-//         setTopics(data.topics)
-//       } catch (err) {
-//         console.error('Error fetching topics:', err)
-//         setError('Failed to load topics')
-//       } finally {
-//         setLoading(false)
-//       }
-//     }
-//     fetchTopics()
-//   }, [category, year])
-
-//   if (loading) return <p>Loading...</p>
-//   if (error) return <p>{error}</p>
-//   if (topics.length === 0) return <p>No topics found for {year}</p>
-
-//   return (
-//     <div>
-//       {topics.map((topic) => (
-//         <div key={topic._id} className="border p-4 my-2">
-//           <h2>{topic.title}</h2>
-//           <p>{topic.description}</p>
-//           <p>Created: {new Date(topic.createdAt).toLocaleDateString()}</p>
-//         </div>
-//       ))}
-//     </div>
-//   )
-// }
 'use client'
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import TopicView from 'src/app/components/TopicView'
-const apiUrl = process.env.API_URL
+const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 interface Topic {
   _id: string
@@ -85,6 +30,7 @@ export default function TopicsList({ category }: TopicListProps) {
   const fixedYears = ['2024', '2025', '2026', '2027', '2028', '2029'] // 고정된 연도 탭
 
   useEffect(() => {
+    console.log('Current category:', category)
     async function fetchTopics() {
       try {
         const res = await fetch(
