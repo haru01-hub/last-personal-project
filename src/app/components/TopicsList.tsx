@@ -91,6 +91,8 @@ export default function TopicsList({ category }: TopicListProps) {
           `${apiUrl}/api/${category}?category=${category}`
         )
         if (!res.ok) {
+          const errorText = await res.text() // Fetch the error message from the response
+          console.error('Failed to fetch topics:', res.status, errorText) //여기 수정해버렸다=====원래 없었음.
           throw new Error('Failed to fetch topics')
         }
         const data = await res.json()
